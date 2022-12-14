@@ -1,7 +1,9 @@
 version: '2'
 services:
   neo4j:
-    image: docker.io/bitnami/neo4j:5
+    image: neo4j:latest
+    # environment:
+    #   NEO4J_AUTH: 'neo4j/myPassword123'
     ports:
       - '7474:7474'
       - '7473:7473'
