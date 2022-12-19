@@ -31,7 +31,7 @@ export const insertNodes = async ({ nodes, session }) => {
                 elementId(a) = "${node._value.elementId}" 
                 AND 
                 elementID(b) = "${edge._value.elementId}"
-            CREATE (a)-[r:RELTYPE]->(b)
+            CREATE (a)-[r:RELTYPE {weight: ${weight}}]->(b)
             RETURN type(r), a, b
             `
       );
