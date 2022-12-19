@@ -76,8 +76,8 @@ export const txtToGraph = (txt) => {
 
   edges.forEach((edge) => {
     const { a, b } = edge;
-    nodesRaw[a].addEdges(nodesRaw[b]);
-    nodesRaw[b].addEdges(nodesRaw[a]);
+    nodesRaw[a]._addEdge(nodesRaw[b], 1);
+    nodesRaw[b]._addEdge(nodesRaw[a], 1);
   });
 
   const nodes = new Set(Object.values(nodesRaw));
@@ -90,4 +90,27 @@ export const txtToGraph = (txt) => {
 const main = async () => {
   const text = fs.readFileSync("./UEB6/graph1.txt").toString();
   txtToGraph(text);
+};
+
+/**
+ *
+ * Print an adjazenz list for a given set of nodes
+ * @param {Set<Vertice<any>>} nodes
+ */
+export const displayAdjacencyMatrix = (nodes) => {
+  console.log("\nAdjacency Matrix: ");
+  const arr = Array.from(nodes);
+
+  console.log("   " + arr.map((v) => v.name).join(" "));
+  console.log("--+" + "-".repeat(arr.length * 2));
+
+  arr.forEach((v1) => {
+    /** @type {string[]} */
+    let row = [];
+    row.push(v1.name + " |");
+    arr.forEach((v2) => {
+      row.push(v1._edges.get(v2)?.toString() ?? " ");
+    });
+    console.log(row.join(" "));
+  });
 };

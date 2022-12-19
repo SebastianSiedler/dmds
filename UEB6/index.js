@@ -1,7 +1,11 @@
 import neo4j from "neo4j-driver";
 import { insertNodes } from "./utils/insertNodes.js";
 import fs from "fs";
-import { getAdjazentlist, txtToGraph } from "./utils/index.js";
+import {
+  displayAdjacencyMatrix,
+  getAdjazentlist,
+  txtToGraph,
+} from "./utils/index.js";
 
 const driver = neo4j.driver(
   "neo4j://localhost",
@@ -19,10 +23,11 @@ const main = async () => {
   /* Delete all nodes */
   await session.run("MATCH (n:Node) DETACH DELETE n");
 
-  const text = fs.readFileSync("./UEB6/graph2.txt").toString();
+  const text = fs.readFileSync("./UEB6/graph1.txt").toString();
   const nodes = txtToGraph(text);
 
   getAdjazentlist(nodes);
+  displayAdjacencyMatrix(nodes);
 
   await insertNodes({ session, nodes });
 

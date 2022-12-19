@@ -22,7 +22,7 @@ export class Vertice {
    * @param {Vertice<T>} node
    * @param {number} weight
    */
-  _addEdge(node, weight = 0) {
+  _addEdge(node, weight) {
     this._edges.set(node, weight);
   }
 
@@ -30,9 +30,9 @@ export class Vertice {
    *
    * @param  {...Vertice<T>} nodes
    */
-  addEdges(...nodes) {
-    nodes.forEach((node) => {
-      this._addEdge(node);
-    });
-  }
+//   addEdges(...nodes) {
+//     nodes.forEach((node) => {
+//       this._addEdge(node);
+//     });
+//   }
 }
