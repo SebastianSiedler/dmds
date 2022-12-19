@@ -18,7 +18,9 @@ Adjacency Matrix:
 4 |     1 1  
 ```
 
-nach docker compose up auf 
+### Setup
+
+nach `docker-compose up` auf 
 http://localhost:7474/
 verbinden und password ändern
 
