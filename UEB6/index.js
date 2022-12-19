@@ -1,7 +1,7 @@
 import neo4j from "neo4j-driver";
 import { insertNodes } from "./utils/insertNodes.js";
 import fs from "fs";
-import { txtToGraph } from "./utils/index.js";
+import { getAdjazentlist, txtToGraph } from "./utils/index.js";
 
 const driver = neo4j.driver(
   "neo4j://localhost",
@@ -21,6 +21,8 @@ const main = async () => {
 
   const text = fs.readFileSync("./UEB6/graph2.txt").toString();
   const nodes = txtToGraph(text);
+
+  getAdjazentlist(nodes);
 
   await insertNodes({ session, nodes });
 

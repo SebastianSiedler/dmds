@@ -1,46 +1,5 @@
 import fs from "fs";
-
-/**
- * @template {any} T
- */
-export class Vertice {
-  /**
-   *
-   * @param {string} name
-   */
-  constructor(name) {
-    this.name = name;
-  }
-
-  name;
-  /** @type {Vertice<T>[]} */
-  _edges = [];
-
-  /** @type {T|null} */
-  _value = null;
-
-  /**
-   *
-   * @param {Vertice<T>} node
-   */
-  _addEdge(node) {
-    this._edges.push(node);
-    /* sort by name */
-    this._edges = this._edges.sort((a, z) =>
-      a.name < z.name ? -1 : a.name > z.name ? 1 : 0
-    );
-  }
-
-  /**
-   *
-   * @param  {...Vertice<T>} nodes
-   */
-  addEdges(...nodes) {
-    nodes.forEach((node) => {
-      this._addEdge(node);
-    });
-  }
-}
+import { Vertice } from "./vertex";
 
 /**
  *
@@ -55,13 +14,28 @@ export const getTextFromFile = async (path) => {
 
 /**
  *
+ * Print an adjazenz list for a given set of nodes
  * @param {Set<Vertice<any>>} nodes
  */
-const getAdjazentlist = (nodes) => {
+export const getAdjazentlist = (nodes) => {
   console.log("Adjazenzliste: ");
   nodes.forEach((node) => {
     console.log(`${node.name} -> [${node._edges.map((x) => x.name)}]`);
   });
+};
+
+/**
+ *
+ * @param {string} txt
+ */
+const txtToEdgeList = (txt) => {
+  return txt
+    .replaceAll(" ", "")
+    .split("}{")
+    .map((s) => {
+      return s.replaceAll("{", "").replaceAll("}", "").split(",");
+    })
+    .map(([a, b]) => ({ a, b }));
 };
 
 /**
@@ -79,11 +53,7 @@ export const txtToGraph = (txt) => {
   [ '5', '6' ], [ '5', '4' ]
 ]
  */
-  const edges = txt
-    .replaceAll(" ", "")
-    .split("}{")
-    .map((s) => s.replaceAll("{", "").replaceAll("}", "").split(","));
-
+  const edges = txtToEdgeList(txt);
   /** @type {Record<string, Vertice<any>>} */
   const nodesRaw = {};
 
@@ -97,13 +67,13 @@ export const txtToGraph = (txt) => {
   '6': Node { name: '6', _edges: [] }
    */
   edges.forEach((edge) => {
-    const [a, b] = edge;
+    const { a, b } = edge;
     nodesRaw[a] = new Vertice(a);
     nodesRaw[b] = new Vertice(b);
   });
 
   edges.forEach((edge) => {
-    const [a, b] = edge;
+    const { a, b } = edge;
     nodesRaw[a].addEdges(nodesRaw[b]);
     nodesRaw[b].addEdges(nodesRaw[a]);
   });
@@ -119,4 +89,3 @@ const main = async () => {
   const text = fs.readFileSync("./UEB6/graph1.txt").toString();
   txtToGraph(text);
 };
-

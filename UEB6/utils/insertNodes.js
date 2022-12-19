@@ -1,5 +1,5 @@
 import { Session } from "neo4j-driver";
-import { Vertice } from "./index.js";
+import { Vertice } from "./vertex";
 
 /**
  *
@@ -35,7 +35,6 @@ export const insertNodes = async ({ nodes, session }) => {
             RETURN type(r), a, b
             `
       );
-      console.log(result.records.at(0)?.get(0));
     }
   }
 };
