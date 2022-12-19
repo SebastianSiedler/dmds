@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Vertice } from "./vertex";
+import { Vertice } from "./vertex.js";
 
 /**
  *
@@ -20,7 +20,9 @@ export const getTextFromFile = async (path) => {
 export const getAdjazentlist = (nodes) => {
   console.log("Adjazenzliste: ");
   nodes.forEach((node) => {
-    console.log(`${node.name} -> [${node._edges.map((x) => x.name)}]`);
+    console.log(
+      `${node.name} -> [${[...node._edges.keys()].map((x) => x.name)}]`
+    );
   });
 };
 

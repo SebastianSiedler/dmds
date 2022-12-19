@@ -11,8 +11,8 @@ export class Vertice {
   }
 
   name;
-  /** @type {Vertice<T>[]} */
-  _edges = [];
+  /** @type {Map<Vertice<T>, number>} */
+  _edges = new Map();
 
   /** @type {T|null} */
   _value = null;
@@ -20,13 +20,10 @@ export class Vertice {
   /**
    *
    * @param {Vertice<T>} node
+   * @param {number} weight
    */
-  _addEdge(node) {
-    this._edges.push(node);
-    /* sort by name */
-    this._edges = this._edges.sort((a, z) =>
-      a.name < z.name ? -1 : a.name > z.name ? 1 : 0
-    );
+  _addEdge(node, weight = 0) {
+    this._edges.set(node, weight);
   }
 
   /**

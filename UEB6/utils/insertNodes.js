@@ -1,5 +1,5 @@
 import { Session } from "neo4j-driver";
-import { Vertice } from "./vertex";
+import { Vertice } from "./vertex.js";
 
 /**
  *
@@ -20,7 +20,7 @@ export const insertNodes = async ({ nodes, session }) => {
   /* add relation between nodes */
   for (const node of nodes) {
     if (node._value === null) throw `Node (${node.name}) _value is null`;
-    for (const edge of node._edges) {
+    for (const [edge, weight] of node._edges) {
       if (edge._value === null) throw "no elementId given";
 
       const result = await session.run(
