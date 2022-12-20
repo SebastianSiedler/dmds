@@ -77,7 +77,7 @@ export const txtToGraph = (txt) => {
   edges.forEach((edge) => {
     const { a, b } = edge;
     nodesRaw[a]._addEdge(nodesRaw[b], 1);
-    nodesRaw[b]._addEdge(nodesRaw[a], 1);
+    // nodesRaw[b]._addEdge(nodesRaw[a], 1);
   });
 
   const nodes = new Set(Object.values(nodesRaw));
